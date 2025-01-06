@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { getTestSuites, executeTestSuite } from './ghostInspectorApi';
+import React, { useEffect, useState } from "react";
+import { getTestSuites, executeTestSuite } from "./ghostInspectorApi";
 
 const App = () => {
-  const [apiKey, setApiKey] = useState('');
+  const [apiKey, setApiKey] = useState("");
   const [suites, setSuites] = useState([]);
   const [selectedSuites, setSelectedSuites] = useState([]);
   const [status, setStatus] = useState(null);
-  const [executionMode, setExecutionMode] = useState('sequence');
+  const [executionMode, setExecutionMode] = useState("sequence");
 
   useEffect(() => {
     if (apiKey) {
@@ -41,12 +41,12 @@ const App = () => {
     if (selectedSuites.length > 0) {
       let allExecutionsSuccessful = true;
 
-      if (executionMode === 'sequence') {
+      if (executionMode === "sequence") {
         // Execute in sequence
         for (const suiteId of selectedSuites) {
           const result = await executeTestSuite(suiteId, apiKey);
 
-          console.log('Result:', result);
+          console.log("Result:", result);
           if (!result) {
             allExecutionsSuccessful = false;
             console.error(`Failed to execute suite: ${suiteId}`);
@@ -70,11 +70,11 @@ const App = () => {
 
       setStatus(
         allExecutionsSuccessful
-          ? 'Selected test suites executed successfully'
-          : 'Some selected test suites failed'
+          ? "Selected test suites executed successfully"
+          : "Some selected test suites failed"
       );
     } else {
-      setStatus('No test suites selected');
+      setStatus("No test suites selected");
     }
   };
 
@@ -94,7 +94,9 @@ const App = () => {
         {suites.length > 0 ? (
           <div>
             <button onClick={handleSelectAll}>
-              {selectedSuites.length === suites.length ? 'Deselect All' : 'Select All'}
+              {selectedSuites.length === suites.length
+                ? "Deselect All"
+                : "Select All"}
             </button>
             {suites.map((suite) => (
               <div key={suite._id}>
@@ -121,8 +123,8 @@ const App = () => {
             type="radio"
             name="executionMode"
             value="sequence"
-            checked={executionMode === 'sequence'}
-            onChange={() => setExecutionMode('sequence')}
+            checked={executionMode === "sequence"}
+            onChange={() => setExecutionMode("sequence")}
           />
           Execute in Sequence
         </label>
@@ -131,8 +133,8 @@ const App = () => {
             type="radio"
             name="executionMode"
             value="parallel"
-            checked={executionMode === 'parallel'}
-            onChange={() => setExecutionMode('parallel')}
+            checked={executionMode === "parallel"}
+            onChange={() => setExecutionMode("parallel")}
           />
           Execute in Parallel
         </label>
@@ -141,7 +143,9 @@ const App = () => {
       {suites.length > 0 && (
         <div>
           <h3>Execute Selected Test Suites</h3>
-          <button onClick={handleExecuteSelectedSuites}>Execute Selected</button>
+          <button onClick={handleExecuteSelectedSuites}>
+            Execute Selected
+          </button>
         </div>
       )}
 
@@ -151,4 +155,3 @@ const App = () => {
 };
 
 export default App;
-
